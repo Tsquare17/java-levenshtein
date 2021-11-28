@@ -26,7 +26,7 @@ public class TestLevenshtein {
     }
 
     @Test
-    public void testCanIgnoreCapitalization() {
+    public void testCanIncludeCapitalization() {
         String a = "string a";
         String b = "String B";
 
