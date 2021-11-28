@@ -36,15 +36,18 @@ public class Levenshtein {
         int indexA = 0;
         int indexB = 0;
 
+        costLoop:
         for (int i = 0; i <= lengthA && i < maxCheckLength; i++) {
             for (int j = 0; j <= lengthB && j < maxCheckLength; j++) {
                 if (i == 0) {
                     cost[i][j] = j;
+
                     continue;
                 }
 
                 if (j == 0) {
                     cost[i][j] = i;
+
                     continue;
                 }
 
@@ -58,13 +61,10 @@ public class Levenshtein {
 
                 if (maxDistance == distance) {
                     indexB = j;
-                    break;
-                }
-            }
+                    indexA = i;
 
-            if (maxDistance == cost[i][indexB]) {
-                indexA = i;
-                break;
+                    break costLoop;
+                }
             }
         }
 
