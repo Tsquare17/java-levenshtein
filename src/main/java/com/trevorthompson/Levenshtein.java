@@ -7,18 +7,36 @@ public class Levenshtein {
     private boolean ignoreCapitalization = true;
 
     public int getDistance(String a, String b) {
-        return levenshtein(a, b, -1, Integer.MAX_VALUE);
-    }
-
-    public int getDistance(String a, String b, int maxDistance, int maxCheckLength) {
-        return levenshtein(a, b, maxDistance, maxCheckLength);
+        return levenshtein(a, b, -1, Integer.MAX_VALUE, 1);
     }
 
     public int getDistance(String a, String b, int maxDistance) {
-        return levenshtein(a, b, maxDistance, Integer.MAX_VALUE);
+        return levenshtein(a, b, maxDistance, Integer.MAX_VALUE, 1);
     }
 
-    private int levenshtein(String a, String b, int maxDistance, int maxCheckLength) {
+    public int getDistance(String a, String b, int maxDistance, int maxCheckLength) {
+        return levenshtein(a, b, maxDistance, maxCheckLength, 1);
+    }
+
+    public float getRatio(String a, String b) {
+        return ratio(a, b, -1, Integer.MAX_VALUE);
+    }
+
+    public float getRatio(String a, String b, int maxDistance) {
+        return ratio(a, b, maxDistance, Integer.MAX_VALUE);
+    }
+
+    public float getRatio(String a, String b, int maxDistance, int maxCheckLength) {
+        return ratio(a, b, maxDistance, maxCheckLength);
+    }
+
+    private float ratio(String a, String b, int maxDistance, int maxCheckLength) {
+        int combinedLength = a.length() + b.length();
+
+        return (float) (combinedLength - levenshtein(a, b, maxDistance, maxCheckLength, 2)) / combinedLength;
+    }
+
+    private int levenshtein(String a, String b, int maxDistance, int maxCheckLength, int replacementCost) {
         if (this.ignoreCapitalization) {
             a = a.toLowerCase(Locale.ROOT);
             b = b.toLowerCase(Locale.ROOT);
@@ -54,7 +72,7 @@ public class Levenshtein {
                 int distance = min(
                         cost[i - 1][j] + 1,
                         cost[i][j - 1] + 1,
-                        cost[i - 1][j - 1] + (a.charAt(i - 1) == b.charAt(j - 1) ? 0 : 1)
+                        cost[i - 1][j - 1] + (a.charAt(i - 1) == b.charAt(j - 1) ? 0 : replacementCost)
                 );
 
                 cost[i][j] = distance;

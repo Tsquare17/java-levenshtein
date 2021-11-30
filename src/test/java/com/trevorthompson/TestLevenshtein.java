@@ -68,4 +68,12 @@ public class TestLevenshtein {
 
         assertEquals(0, levenshtein.getDistance(a, b, -1, 19));
     }
+
+    @Test
+    public void canGetLevenshteinRatio() {
+        String a = "ab";
+        String b = "ac";
+
+        assertEquals(0.5, levenshtein.getRatio(a, b));
+    }
 }

@@ -6,7 +6,7 @@
 
     <groupId>com.trevor-thompson</groupId>
     <artifactId>levenshtein</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 
     <build>
         <plugins>
